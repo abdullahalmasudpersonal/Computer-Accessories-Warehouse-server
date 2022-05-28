@@ -102,29 +102,6 @@ async function run() {
       res.send(result);
     });
 
-    /*     // order get api
-        app.get('/order', verifJWT, async (req, res) => {
-          const email = req.query.email;
-          const decodedEmail = req.decoded.email;
-          if (email === decodedEmail) {
-            const query = { email: email };
-            const cursor = orderCollection.find(query);
-            const orders = await cursor.toArray()
-             return res.send(orders);
-          }
-          else{
-            return res.status(403).send({message: 'forbidden access'});
-          }
-        }); */
-
-    // order get api
-/*     app.get('/order', async (req, res) => {
-      const query = {};
-      const cursor = orderCollection.find(query);
-      const orders = await cursor.toArray();
-      res.send(orders);
-    }); */
-
     // order get manage api
     app.get('/order', async (req, res) => {
       const email = req.query.email;
