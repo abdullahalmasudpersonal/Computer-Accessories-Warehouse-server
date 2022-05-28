@@ -6,7 +6,6 @@ const app = express();
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const port = process.env.PORT || 5000;
 
-
 // middle ware
 app.use(cors());
 app.use(express.json());
@@ -31,7 +30,6 @@ function verifJWT(req, res, next) {
   });
 }
 
-
 async function run() {
   try {
     await client.connect();
@@ -39,15 +37,6 @@ async function run() {
     const productCollection = client.db('af_electronic_ltd').collection('products');
     const orderCollection = client.db('af_electronic_ltd').collection('order');
     const userCollection = client.db('af_electronic_ltd').collection('users');
-
-    /*     // auth 
-        app.post('/login', async(req, res) =>{
-          const user = req.body;
-          const accessToken =jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: '1d'
-          });
-          res.send({ accessToken });
-        }) */
 
     // get review  api
     app.get('/review', async (req, res) => {
@@ -119,8 +108,6 @@ async function run() {
       res.send(result);
     });
 
-
-
     // admin api
     app.get('/admin/:email', async (req, res) => {
       const email = req.params.email;
@@ -128,7 +115,6 @@ async function run() {
       const isAdmin = user.role === 'admin';
       res.send({ admin: isAdmin });
     })
-
 
     // admin user api 
     app.put('/user/admin/:email', verifJWT, async (req, res) => {
@@ -148,7 +134,6 @@ async function run() {
       }
     })
 
-
     // user api 
     app.put('/user/:email', async (req, res) => {
       const email = req.params.email;
@@ -163,7 +148,6 @@ async function run() {
       res.send({ result, token });
     })
 
-
     // user api
     app.get('/user', verifJWT, async (req, res) => {
       const users = await userCollection.find().toArray();
@@ -174,7 +158,6 @@ async function run() {
   finally {
 
   }
-
 }
 
 run().catch(console.dir);
