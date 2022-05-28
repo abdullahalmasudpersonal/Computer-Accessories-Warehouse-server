@@ -118,6 +118,14 @@ async function run() {
         }); */
 
     // order get api
+/*     app.get('/order', async (req, res) => {
+      const query = {};
+      const cursor = orderCollection.find(query);
+      const orders = await cursor.toArray();
+      res.send(orders);
+    }); */
+
+    // order get manage api
     app.get('/order', async (req, res) => {
       const email = req.query.email;
       const query = { email: email};
@@ -125,6 +133,16 @@ async function run() {
       const orders = await cursor.toArray();
       res.send(orders);
     });
+
+    // order delete api
+    app.delete('/order/:id', async (req, res) => {
+      const id = req.query.id;
+      const query = { _id: ObjectId(id)};
+      const result = await orderCollection.deleteOne(query);
+      res.send(result);
+    });
+
+
 
     // admin api
     app.get('/admin/:email', async (req, res) => {
