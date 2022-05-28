@@ -78,21 +78,29 @@ async function run() {
       const query = { _id: ObjectId(id) };
       const product = await productCollection.findOne(query);
       res.send(product);
-    })
+    });
 
     // post product api
     app.post('/product', async (req, res) => {
       const newProduct = req.body;
       const result = await productCollection.insertOne(newProduct);
       res.send(result);
-    })
+    });
+
+    // delete product api
+    app.delete('/product/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await productCollection.deleteOne(query);
+      res.send(result);
+    });
 
     // order post api
     app.post('/order', async (req, res) => {
       const order = req.body;
       const result = await orderCollection.insertOne(order);
       res.send(result);
-    })
+    });
 
     /*     // order get api
         app.get('/order', verifJWT, async (req, res) => {
@@ -112,18 +120,18 @@ async function run() {
     // order get api
     app.get('/order', async (req, res) => {
       const email = req.query.email;
-      const query = { email: email };
+      const query = { email: email};
       const cursor = orderCollection.find(query);
-      const orders = await cursor.toArray()
+      const orders = await cursor.toArray();
       res.send(orders);
     });
 
     // admin api
-    app.get('/admin/:email', async(req, res) =>{
+    app.get('/admin/:email', async (req, res) => {
       const email = req.params.email;
-      const user =  await userCollection.findOne({email: email});
+      const user = await userCollection.findOne({ email: email });
       const isAdmin = user.role === 'admin';
-      res.send({admin: isAdmin});
+      res.send({ admin: isAdmin });
     })
 
 
@@ -140,8 +148,8 @@ async function run() {
         const result = await userCollection.updateOne(filter, updateDoc);
         res.send(result);
       }
-      else{
-        res.status(403).send({message:'forbidden'});
+      else {
+        res.status(403).send({ message: 'forbidden' });
       }
     })
 
