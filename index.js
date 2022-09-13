@@ -152,6 +152,9 @@ run().catch(console.dir);
 app.get('/', (req, res) => {
   res.send('Hello from computer accessories warehouse.');
 });
+app.get('/hello', (req, res) => {
+  res.send('Hello computer accessories warehouse from heroku');
+});
 
 app.listen(port, () => {
   console.log(`computer accessories warehouse app listening on port ${port}`);
